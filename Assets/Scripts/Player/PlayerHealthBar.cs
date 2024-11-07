@@ -23,6 +23,7 @@ public class PlayerHealthBar : MonoBehaviour, IHealthBar
     }
     public void UpdateHealth(float healthRemain)
     {
+        if (healthRemain == 0) return;
         if (OnHealth.Count == 0) return;
         GameObject smallHealth = OnHealth.Pop();
         Animator animator = smallHealth.GetComponent<Animator>();

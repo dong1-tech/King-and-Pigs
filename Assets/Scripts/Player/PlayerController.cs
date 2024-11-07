@@ -21,17 +21,14 @@ public class PlayerController : MonoBehaviour, IHitable
     [SerializeField] private LayerMask wallMask;
 
     //============= Attack =============
-    private float resetAttackTime = 0.5f;
     private bool isResetAttack;
-    private float lockAttackTime = 0.5f;
+    private bool isAttack;
     [SerializeField] private Transform attackPoint;
     [SerializeField] private float attackRange;
     [SerializeField] private LayerMask enemiesLayer;
 
-    //============= Hit ===============
+    //============= Hit and Dead ===============
     private bool isHit;
-    public bool isImortal { get; private set; }
-    private float lockHitTime = 0.5f;
     private bool isDead;
 
     //============== Grounded Check ===============
@@ -149,24 +146,18 @@ public class PlayerController : MonoBehaviour, IHitable
             ChangeState(PlayerState.dead);
             return;
         }
-        if(Time.time < lockTill)
-        {
-            return;
-        }
-        ResetAttack();
-        ResetHit();
-        if (isHit && !isImortal)
+        if (isHit)
         {
             ChangeState(PlayerState.hit);
-            LockState(lockHitTime);
-            isImortal = true;
             return;
         }
+        if (isAttack) return;
         if (attack.WasPerformedThisFrame() && isResetAttack)
         {
             ChangeState(PlayerState.attack);
-            LockState(lockAttackTime);
-            isResetAttack = false;  
+            isAttack = true;
+            isResetAttack = false;
+            Invoke("AttackReset", 1.5f);
             return;
         }
         if(rigi.velocity == Vector2.zero)
@@ -187,44 +178,32 @@ public class PlayerController : MonoBehaviour, IHitable
         }
     }
 
-    void LockState(float lockTime)
+    void AttackDone()
     {
-        lockTill = Time.time + lockTime;
+        isAttack = false;
     }
-
-    void ResetAttack()
+    void HitDone()
     {
-        if (isResetAttack == true) return;
-
-        if(Time.time > lockTill + resetAttackTime)
-        {
-            isResetAttack = true;
-        }
-    }
-
-    void ResetHit()
-    {
-        if (!isImortal) return;
-        isImortal = false;
         isHit = false;
     }
-
-    public void EndGame()
+    void AttackReset()
     {
-
+        isResetAttack = true;
     }
     public float OnHit()
     {
-        if (currentHealth > 0)
+        int damage = 0;
+        if (currentHealth > 0 && !isHit)
         {
             currentHealth -= 1;
             isHit = true;
+            damage += 1;
         }
         if (currentHealth == 0)
         {
             OnDead();
         }
-        return 0;
+        return damage;
     }
 
     private void OnDead()
@@ -236,6 +215,7 @@ public class PlayerController : MonoBehaviour, IHitable
     #region Player Physics
     void OnRun()
     {
+        if (isAttack || isHit) return;
         direction = move.ReadValue<Vector2>();
         //============= Flip player ===============
         if (direction.x < 0)
@@ -273,7 +253,8 @@ public class PlayerController : MonoBehaviour, IHitable
     }
     void OnJump(InputAction.CallbackContext context)
     {
-        if (GroundCheck())
+        if (isAttack || isHit) return;
+        if (GroundCheck() )
         {
             rigi.velocity = new Vector2(rigi.velocity.x, jumpSpeed * Time.fixedDeltaTime);
         }
