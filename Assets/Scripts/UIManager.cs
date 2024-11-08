@@ -51,6 +51,13 @@ public class UIManager : MonoBehaviour
 
     public void OnRestartGame()
     {
+        GameManager.Instance.IsRestart(true);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    public void OnHome()
+    {
+        GameManager.Instance.IsRestart(false);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 

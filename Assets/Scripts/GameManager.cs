@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -12,8 +13,10 @@ public class GameManager : MonoBehaviour
 
     public GameState currentState;
     public static Action<GameState> OnStateChange;
+    public static bool isRestart = false;
 
     private float numberOfDieEnemies;
+    private float numberOfEnemies;
 
     public void UpdateState(GameState newState)
     {
@@ -66,17 +69,31 @@ public class GameManager : MonoBehaviour
         {
             Instance = this;
         }
+        numberOfEnemies = GameObject.FindGameObjectsWithTag("Enemy").Count();
     }
 
     private void Start()
     {
         UIManager.Instance.Init();
-        UpdateState(GameState.Start);
-        isRunnning = false;
+        if (!isRestart)
+        {
+            UpdateState(GameState.Start);
+            isRunnning = false;
+        }
+        else
+        {
+            UpdateState(GameState.Running);
+        }
+    }
+
+    public void IsRestart(bool value)
+    {
+        isRestart = value;
     }
 
     public void NotifyOnHit(Collider2D objectGetHit)
     {
+        if (objectGetHit.GetComponent<IHitable>() == null) return;
         IHitable hitable = objectGetHit.GetComponent<IHitable>();
         float remainHealth = (float)hitable?.OnHit();
         UIManager.Instance.HealthBarUpdate(objectGetHit, remainHealth);
@@ -89,7 +106,7 @@ public class GameManager : MonoBehaviour
         } else
         {
             numberOfDieEnemies += 1;
-            if(numberOfDieEnemies == 2)
+            if(numberOfDieEnemies == numberOfEnemies)
             {
                 Invoke("Victory", 2f);
             }

@@ -100,7 +100,10 @@ public class ThrowingEnemies : MonoBehaviour, IHitable
     }
     private void FixedUpdate()
     {
-        if (!GameManager.Instance.isRunnning) return;
+        if (!GameManager.Instance.isRunnning)
+        {
+            return;
+        }
         enemyStateMachine.Update();
     }
     private void StateChange()
