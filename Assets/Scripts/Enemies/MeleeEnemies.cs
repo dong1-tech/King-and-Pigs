@@ -39,6 +39,7 @@ public class MeleeEnemies : MonoBehaviour, IHitable
         rigi = GetComponent<Rigidbody2D>();
         currentHealth = maxHealth;
         enemies = new StateMachine();
+
         var normalState = enemies.CreateState("Normal");
         normalState.onEnter = delegate
         {
@@ -109,6 +110,7 @@ public class MeleeEnemies : MonoBehaviour, IHitable
     }
     private void FixedUpdate()
     {
+        if (!GameManager.Instance.isRunnning) return;
         enemies.Update();
     }
     private void StateChange()
@@ -186,6 +188,7 @@ public class MeleeEnemies : MonoBehaviour, IHitable
     public void OnDead()
     {
         isDead = true;
+        GameManager.Instance.NotifyOnDead(this.name);
     }
 
     private void Destroy()

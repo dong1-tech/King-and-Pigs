@@ -2,6 +2,7 @@
 public interface IHitable
 {
     public float OnHit();
+    public void OnDead();
 }
 public interface IHealthBar
 {

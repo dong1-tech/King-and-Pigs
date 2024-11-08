@@ -100,6 +100,7 @@ public class ThrowingEnemies : MonoBehaviour, IHitable
     }
     private void FixedUpdate()
     {
+        if (!GameManager.Instance.isRunnning) return;
         enemyStateMachine.Update();
     }
     private void StateChange()
@@ -165,6 +166,7 @@ public class ThrowingEnemies : MonoBehaviour, IHitable
     public void OnDead()
     {
         isDead = true;
+        GameManager.Instance.NotifyOnDead(this.name);
     }
 
     private void Destroy()

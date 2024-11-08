@@ -92,12 +92,14 @@ public class PlayerController : MonoBehaviour, IHitable
     // Update is called once per frame
     void Update()
     {
+        if (!GameManager.Instance.isRunnning) return;
         SelecState();
         PlayState();
     }
 
     private void FixedUpdate()
     {
+        if (!GameManager.Instance.isRunnning) return;
         WallSliding();
         OnRun();
     }
@@ -149,6 +151,7 @@ public class PlayerController : MonoBehaviour, IHitable
         if (isHit)
         {
             ChangeState(PlayerState.hit);
+            isAttack = false;
             return;
         }
         if (isAttack) return;
@@ -201,14 +204,15 @@ public class PlayerController : MonoBehaviour, IHitable
         }
         if (currentHealth == 0)
         {
-            OnDead();
+            isDead = true;
+            Invoke("OnDead", 1f);
         }
         return damage;
     }
 
-    private void OnDead()
+    public void OnDead()
     {
-        isDead = true;
+        GameManager.Instance.NotifyOnDead(this.name);
     }
     #endregion
 
@@ -246,7 +250,7 @@ public class PlayerController : MonoBehaviour, IHitable
 
     private void WallSliding()
     {
-        if(WallCheck() && !GroundCheck() && Input.GetAxis("Horizontal") != 0)
+        if(WallCheck() && !GroundCheck())
         {
             rigi.velocity = new Vector2(rigi.velocity.x, sldingSpeed);
         }
