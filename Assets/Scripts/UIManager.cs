@@ -18,12 +18,12 @@ public class UIManager : MonoBehaviour
         {
             Instance = this;
         }
-        GameManager.OnStateChange += OnEnableScene;
+        
     }
 
     public void Init()
     {
-        
+        GameManager.OnStateChange += OnEnableScene;
     }
 
     private void OnDestroy()

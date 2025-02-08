@@ -43,13 +43,12 @@ GameObject:
   - component: {fileID: 5815445981604327656}
   - component: {fileID: 5059692253626981874}
   - component: {fileID: 7967401137438683349}
-  - component: {fileID: 8054015960951134239}
   - component: {fileID: 5623089277288283435}
   - component: {fileID: 212542803014675372}
   - component: {fileID: 8062629908736697842}
   m_Layer: 8
   m_Name: Pig Box
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -171,51 +170,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!61 &8054015960951134239
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7132455957119921034}
-  m_Enabled: 0
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0.093497336, y: -0.09723711}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1.625, y: 1.875}
-    newSize: {x: 1.625, y: 1.875}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 1.3482479, y: 1.6805258}
-  m_EdgeRadius: 0
 --- !u!114 &5623089277288283435
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -237,8 +191,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   box: {fileID: 7193199356392726540, guid: a42ae97a3c2d08144998acbb22223d72, type: 3}
-  lockThrowingTime: 1
-  lockPickingTime: 1
+  lockThrowingTime: 1.5
+  lockPickingTime: 1.5
 --- !u!70 &212542803014675372
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -361,7 +315,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 188558264754565463, guid: c29be7a1e9860554b8385e72d5f8adfd, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 1.04
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 188558264754565463, guid: c29be7a1e9860554b8385e72d5f8adfd, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -386,6 +340,18 @@ PrefabInstance:
     - target: {fileID: 7434888114819083647, guid: c29be7a1e9860554b8385e72d5f8adfd, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8717916294743520155, guid: c29be7a1e9860554b8385e72d5f8adfd, type: 3}
+      propertyPath: m_Color.b
+      value: 0.13178349
+      objectReference: {fileID: 0}
+    - target: {fileID: 8717916294743520155, guid: c29be7a1e9860554b8385e72d5f8adfd, type: 3}
+      propertyPath: m_Color.g
+      value: 0.13178349
+      objectReference: {fileID: 0}
+    - target: {fileID: 8717916294743520155, guid: c29be7a1e9860554b8385e72d5f8adfd, type: 3}
+      propertyPath: m_Color.r
+      value: 0.8415094
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

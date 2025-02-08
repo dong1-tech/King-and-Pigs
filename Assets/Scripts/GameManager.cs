@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance;
     public Transform player;
 
+    [HideInInspector]
     public bool isRunnning;
 
     public GameState currentState;
@@ -74,6 +75,11 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        GameObject[] cannons = GameObject.FindGameObjectsWithTag("Cannon");
+        foreach (var cannon in cannons)
+        {
+            cannon.GetComponent<Cannon>().Init();
+        }
         UIManager.Instance.Init();
         if (!isRestart)
         {
@@ -93,8 +99,11 @@ public class GameManager : MonoBehaviour
 
     public void NotifyOnHit(Collider2D objectGetHit)
     {
-        if (objectGetHit.GetComponent<IHitable>() == null) return;
-        IHitable hitable = objectGetHit.GetComponent<IHitable>();
+        var hitable = objectGetHit.GetComponent<IHitable>();
+        if (hitable == null)
+        {
+            return;
+        }
         float remainHealth = (float)hitable?.OnHit();
         UIManager.Instance.HealthBarUpdate(objectGetHit, remainHealth);
     }

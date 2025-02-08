@@ -1,8 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem.Processors;
-using UnityEngine.Playables;
 
 public class ThrowingEnemies : MonoBehaviour, IHitable
 {
@@ -15,7 +11,6 @@ public class ThrowingEnemies : MonoBehaviour, IHitable
     private int currentHealth;
 
     private bool isThrowing = false;
-    private bool isDead = false;
 
     [SerializeField] private Transform edgeDetect;
     [SerializeField] private LayerMask GroundLayer;
@@ -91,12 +86,6 @@ public class ThrowingEnemies : MonoBehaviour, IHitable
         {
             StateChange();
         };
-
-        var deadState = enemyStateMachine.CreateState("Dead");
-        deadState.onEnter = delegate
-        {
-            animator.Play("Dead");
-        };
     }
     private void FixedUpdate()
     {
@@ -108,11 +97,6 @@ public class ThrowingEnemies : MonoBehaviour, IHitable
     }
     private void StateChange()
     {
-        if (isDead)
-        {
-            enemyStateMachine.TransitionTo("Dead");
-            return;
-        }
         if (Time.fixedTime < lockTill)
         {
             return;
@@ -168,12 +152,7 @@ public class ThrowingEnemies : MonoBehaviour, IHitable
 
     public void OnDead()
     {
-        isDead = true;
         GameManager.Instance.NotifyOnDead(this.name);
-    }
-
-    private void Destroy()
-    {
         Destroy(gameObject);
     }
 

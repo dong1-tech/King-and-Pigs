@@ -47,7 +47,7 @@ GameObject:
   - component: {fileID: 5782040235580969941}
   - component: {fileID: 5294846147565529366}
   - component: {fileID: 4262887239374200549}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -278,6 +278,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c029ac0f62e595489dc601134d87dc8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  healthList:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!1 &7779332624013210158
 GameObject:
   m_ObjectHideFlags: 0
@@ -318,7 +322,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8512130122420053114}
-  - component: {fileID: 346576039761651925}
   m_Layer: 0
   m_Name: Attack Point
   m_TagString: Untagged
@@ -341,16 +344,3 @@ Transform:
   m_Children: []
   m_Father: {fileID: 3489761926723237605}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &346576039761651925
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7786403418644412490}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 05252c6445b083c4e999e8cdb99872cf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  radius: 0.9
